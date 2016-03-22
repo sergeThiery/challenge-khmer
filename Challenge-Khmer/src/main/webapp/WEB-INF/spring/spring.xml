@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/task/spring-context-3.0.xsd">
+        
+         <!-- SpringMVC -->
+    <import resource="spring-mvc.xml"/>
+    
+    <import resource="spring-security.xml"/>
+    
+         <jee:jndi-lookup id="myContactDataSource" jndi-name="jdbc/tomcatDataSource" lookup-on-startup="false"
+                     proxy-interface="javax.sql.DataSource"/>
+
+	<context:component-scan base-package="com.challenge.controller" />
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/webjars/**"
+		location="classpath:/META-INF/resources/webjars/" />
+
+	<bean id="springConfig" class="com.challenge.configuration.SwaggerConfig" />
+
+	<bean id="hibernateConfig" class="com.challenge.configuration.HibernateConfiguration" />
+
+
+	<bean id="teamProcess" class="com.challenge.process.impl.TeamProcessImpl" />
+
+	<bean id="gameProcess" class="com.challenge.process.impl.GameProcessImpl" />
+	
+	<bean id="playerProcess" class="com.challenge.process.impl.PlayerProcessImpl" />
+
+	<bean id="teamService" class="com.challenge.service.impl.TeamServiceImpl" />
+	
+	<bean id="gameService" class="com.challenge.service.impl.GameServiceImpl" />
+	
+	<bean id="playerService" class="com.challenge.service.impl.PlayerServiceImpl" />
+	
+	<bean id="userService" class="com.challenge.service.impl.UserServiceImpl" />
+
+	<bean id="teamDao" class="com.challenge.dao.impl.TeamDaoImpl" />
+	
+	<bean id="gameDao" class="com.challenge.dao.impl.GameDaoImpl" />
+	
+	<bean id="playerDao" class="com.challenge.dao.impl.PlayerDaoImpl" />
+	
+	<bean id="userDao" class="com.challenge.dao.impl.UserDaoImpl" />
+
+	<bean id="teamCommand" class="com.challenge.hystrix.commands.TeamCommand" />
+	
+	
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
+
+</beans>
